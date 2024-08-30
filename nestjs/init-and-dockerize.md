@@ -140,7 +140,7 @@ CMD ["bash", "init/init-dev.sh"]
 ```
 
 #### 3.5
-In `docker-compose.yml` and `dockercompose-dev.yml` write the configuration for the docker containers
+In `docker-compose.yml` and `docker-compose-dev.yml` write the configuration for the docker containers
 
 > docker-compose.yml
 ```yaml
