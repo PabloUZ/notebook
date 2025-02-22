@@ -13,7 +13,7 @@
     - [Use TypeORM](./nestjs/use-typeorm.md)
 - Mongoose (MongoDB)
     - [Configure Mongoose](./nestjs/config-mongoose.md)
-    <!-- - [Use Mongoose](./nestjs/use-typeorm.md) -->
+    - [Use Mongoose](./nestjs/use-mongoose.md)
 
 - [Use DTO](./nestjs/use-dto.md)
 
