@@ -157,18 +157,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "<host port>:<container port>"
-    depends_on:
-      - db
-  db:
-    image: mysql
-    env_file:
-      - ./prod.env
-    container_name: ${DB_HOST_NAME}
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
 ```
 
 > docker-compose-dev.yml
@@ -188,18 +176,6 @@ services:
       - ./src:/app/src
     ports:
       - "<host port>:<container port>"
-    depends_on:
-      - db
-  db:
-    image: mysql
-    env_file:
-      - ./dev.env
-    container_name: ${DB_HOST_NAME}
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
 ```
 
 #### 3.6
@@ -208,11 +184,6 @@ In the `.env` files write the following variables at least
 ```bash
 NODE_ENV=
 HOST_NAME=
-DB_HOST_NAME=
-DATABASE_ROOT_PASSWORD=
-DATABASE_NAME=
-DATABASE_USER=
-DATABASE_PASSWORD=
 ```
 
 ### 4. Add the .env files to .gitignore
