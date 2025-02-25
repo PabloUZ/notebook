@@ -1,5 +1,6 @@
 # NestJS
 
+> [!NOTE]
 > If something in the code is surrounded by "< >" symbols, you must replace with it's proper value.
 
 ## Contents
