@@ -1,6 +1,6 @@
 # NestJS
 
-> [!NOTE]
+> [!IMPORTANT]
 > If something in the code is surrounded by "< >" symbols, you must replace with it's proper value.
 
 ## Contents
@@ -17,5 +17,7 @@
     - [Use Mongoose](./nestjs/use-mongoose.md)
 
 - [Use DTO](./nestjs/use-dto.md)
+
+- [Hash Passwords](./nestjs/hash-bcrypt.md)
 
 - [Swagger Docs](./nestjs/create-docs.md)
