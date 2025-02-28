@@ -33,9 +33,6 @@ Create the following structure:
 
 ```bash
 📂my-project
-├─ 📂 init
-│   ├─ 📄 init-dev.sh
-│   └─ 📄 init-prod.sh
 ├─ 📄 .dockerignore
 ├─ 📄 docker-compose-dev.yml
 ├─ 📄 docker-compose.yml
@@ -44,31 +41,7 @@ Create the following structure:
 ├─ 📄 dev.env
 └─ 📄 prod.env
 ```
-
 #### 3.2
-In the init files execute the script previously configured in `package.json`:
-
-> init-dev.sh
-```bash
-#!/bin/bash
-
-sleep 20
-
-npm run start:dev
-```
-
-> init-prod.sh
-```bash
-#!/bin/bash
-
-sleep 20
-
-npm run start:prod
-```
-
-The command `sleep` is necesary to set timeout until database start
-
-#### 3.3
 In `.dockerignore` write the files that are not required for the app to work.
 
 > .dockerignore
@@ -82,7 +55,7 @@ test/
 README.md
 ```
 
-#### 3.4
+#### 3.3
 In `Dockerfile` and `Dockerfile.dev` write the configuration for the docker images
 
 > Dockerfile
@@ -118,7 +91,7 @@ RUN rm -rf /app_temp
 
 EXPOSE <port>
 
-CMD ["bash", "init/init-prod.sh"]
+CMD ["npm", "run", "start:prod"]
 ```
 
 > Dockerfile.dev
@@ -136,7 +109,7 @@ COPY . .
 
 EXPOSE <port>
 
-CMD ["bash", "init/init-dev.sh"]
+CMD ["npm", "run", "start:prod"]
 ```
 
 #### 3.5
@@ -156,7 +129,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "<host port>:<container port>"
+      - "<host port>:${PORT}"
 ```
 
 > docker-compose-dev.yml
@@ -175,7 +148,7 @@ services:
     volumes:
       - ./src:/app/src
     ports:
-      - "<host port>:<container port>"
+      - "<host port>:${PORT}"
 ```
 
 #### 3.6
@@ -184,6 +157,7 @@ In the `.env` files write the following variables at least
 ```bash
 NODE_ENV=
 HOST_NAME=
+PORT=
 ```
 
 ### 4. Add the .env files to .gitignore

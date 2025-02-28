@@ -22,6 +22,19 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USER}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    healthcheck:
+      test: [
+          'CMD',
+          'mysqladmin',
+          'ping',
+          '-h',
+          'localhost',
+          '-uroot',
+          '-p${DATABASE_ROOT_PASSWORD}',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 ```
 
 > docker-compose-dev.yml
@@ -39,6 +52,19 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USER}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    healthcheck:
+      test: [
+          'CMD',
+          'mysqladmin',
+          'ping',
+          '-h',
+          'localhost',
+          '-uroot',
+          '-p${DATABASE_ROOT_PASSWORD}',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 ```
 
 The service `db` is mandatory for the `app` service to work, so we must specify this in `app`
@@ -49,7 +75,8 @@ services:
   app:
     ...
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 ```
 
 ### 2. Update env files
