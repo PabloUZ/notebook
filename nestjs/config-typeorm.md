@@ -17,6 +17,7 @@ services:
     env_file:
       - ./prod.env
     container_name: ${DB_HOST_NAME}
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
@@ -47,6 +48,7 @@ services:
     env_file:
       - ./dev.env
     container_name: ${DB_HOST_NAME}
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
@@ -65,6 +67,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
 ```
 
 The service `db` is mandatory for the `app` service to work, so we must specify this in `app`
@@ -78,6 +81,32 @@ services:
       db:
         condition: service_healthy
 ```
+
+Then we must register a new volume for the database to save data.
+In this way, if we destroy the container, data will remain.
+
+> docker-compose.yml and docker-compose-dev.yml
+```yaml
+services:
+  ...
+
+volumes:
+  <app name>-db_data:
+    driver: local
+```
+
+Finally add this volume to the service `db`
+
+> docker-compose.yml and docker-compose-dev.yml
+```yaml
+services:
+  db:
+    ...
+    volumes:
+      - <app name>-db_data:/var/lib/mysql
+```
+
+
 
 ### 2. Update env files
 
@@ -137,7 +166,7 @@ Now, we can import `TypeOrmModule`
       useFactory: (configService: ConfigService) => ({
         type: configService.get<
           'mysql' | 'postgres' | 'sqlite' | 'mssql' | 'oracle'
-        >('DB_TYPE'),
+        >('DB_TYPE') ?? 'sqlite',
         host: configService.get<string>('DB_HOST_NAME'),
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('DATABASE_USER'),
