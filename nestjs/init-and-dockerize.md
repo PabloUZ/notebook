@@ -21,10 +21,24 @@ Create 3 scripts in `package.json`:
 
 Then add the following commands:
 
-```bash
-"start:dev": "nodemon src/main.ts -t ts --watch src"
-"start:prod": "pm2-runtime main.js"
-"build": "nest build && copyfiles package.json prod.env dist/"
+```json
+/*
+Uses nodemon to run and watch changes in the `src` directory
+to auto reload the app
+*/
+"start:dev": "nodemon src/main.ts -t ts --watch src",
+
+/*
+Uses pm2 to run production app when compiled.
+It reload app when it fail.
+*/
+"start:prod": "pm2-runtime main.js",
+
+/*
+When the app is ready to production, it builld the app
+and then copy the package.json to the build directory.
+*/
+"build": "nest build && copyfiles package.json prod.env dist/",
 ```
 
 ### 3. Create the new files
@@ -58,95 +72,184 @@ README.md
 #### 3.3
 In `Dockerfile` and `Dockerfile.dev` write the configuration for the docker images
 
-> Dockerfile
+> Dockerfile <br>
+> Production
 ```docker
+# Specify the image to build the container.
+# This image is NodeJS based.
+# More images at: https://hub.docker.com/_/node
+# Change <version> with a nodejs valid version
+# Use SemVer format: https://semver.org/
 FROM node:<version>
 
+# Create a temp folder before building
 RUN mkdir /app_temp
 
+# Set as main working directory
 WORKDIR /app_temp
 
+# Install pm2 and copyfiles globally
 RUN npm install -g pm2 copyfiles
 
+# Copy the package.json file to the container and
+# install the dependencies
 COPY package.json .
 RUN npm install
 
+# Copy the source code to the container
 COPY . .
 
+# Build the app
 RUN npm run build
 
-RUN mkdir -p /app_temp/dist/init
+# Create the app folder
+RUN mkdir /app
 
-RUN cp ./init/init-prod.sh /app_temp/dist/init
-
-RUN rm -rf /app
-
+# Move the build to the app folder
 RUN mv /app_temp/dist/ /app
 
+# Set the app folder as the working directory
 WORKDIR /app
 
+# Install the dependencies
 RUN npm install
 
+# Remove the temp folder
 RUN rm -rf /app_temp
 
+# Expose the port that the app will use
+# Change <port> with the port that the app will use
+# Just documentation
 EXPOSE <port>
 
+# Run the app
 CMD ["npm", "run", "start:prod"]
 ```
 
-> Dockerfile.dev
+> Dockerfile.dev <br>
+> Development
 ```docker
+# Specify the image to build the container.
+# This image is NodeJS based.
+# More images at: https://hub.docker.com/_/node
+# Change <version> with a nodejs valid version
+# Use SemVer format: https://semver.org/
 FROM node:<version>
 
+# Set as main working directory
 WORKDIR /app
 
+# Install nodemon globally
 RUN npm install -g nodemon
 
+# Copy the package.json file to the container and
+# install the dependencies
 COPY package.json .
 RUN npm install
 
+# Copy the source code to the container
 COPY . .
 
+# Expose the port that the app will use
+# Change <port> with the port that the app will use
+# Just documentation
 EXPOSE <port>
 
+# Run the app
 CMD ["npm", "run", "start:prod"]
 ```
 
 #### 3.5
 In `docker-compose.yml` and `docker-compose-dev.yml` write the configuration for the docker containers
 
-> docker-compose.yml
+> docker-compose.yml <br>
+> Production
 ```yaml
+# Production docker-compose file
+# This file will run the app in production mode
+# ${} are environment variables that will be replaced
+# with the values in the .env file
 services:
+  # App service
+  # This service will run the application
   app:
+    # Image to use
+    # Change <app name> with the name of the app
     image: img-<app name>:latest
+
+    # Environment file to use
     env_file:
       - ./prod.env
+
+    # Environment variables
     environment:
       NODE_ENV: ${NODE_ENV}
+
+    # Container name
+    # Used to identify the container
+    # Also to communicate with other containers
     container_name: ${HOST_NAME}
+
+    # Build the app using the previously created
+    # Dockerfile
     build:
       context: .
       dockerfile: Dockerfile
+
+    # Port forwarding:
+    # This will allow the app to be accessed from
+    # the host machine.
+    # Change <host port> with the port that the app
+    # will use in the host machine
     ports:
       - "<host port>:${PORT}"
 ```
 
-> docker-compose-dev.yml
+> docker-compose-dev.yml <br>
+> Development
 ```yaml
+# Development docker-compose file
+# This file will run the app in development mode
+# ${} are environment variables that will be replaced
+# with the values in the .env file
 services:
+  # App service
+  # This service will run the application
   app:
+    # Image to use
+    # Change <app name> with the name of the app
     image: img-<app name>-dev:latest
+
+    # Environment file to use
     env_file:
       - ./dev.env
+
+    # Environment variables
     environment:
       NODE_ENV: ${NODE_ENV}
+
+    # Container name
+    # Used to identify the container
+    # Also to communicate with other containers
     container_name: ${HOST_NAME}
+
+    # Build the app using the previously created
+    # Dockerfile
     build:
       context: .
       dockerfile: Dockerfile.dev
+
+    # Volume to mount the source code
+    # This will allow the app to be updated
+    # without the need to rebuild the container
     volumes:
       - ./src:/app/src
+
+    # Port forwarding:
+    # This will allow the app to be accessed from
+    # the host machine.
+    # Change <host port> with the port that the app
+    # will use in the host machine
     ports:
       - "<host port>:${PORT}"
 ```
