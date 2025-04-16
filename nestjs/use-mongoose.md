@@ -66,3 +66,5 @@ constructor(
   @InjectModel(Post.name) private readonly postRepository: Model<Post>,
 ) {}
 ```
+
+[Back](../NestJS.md)

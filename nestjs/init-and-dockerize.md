@@ -80,20 +80,17 @@ In `Dockerfile` and `Dockerfile.dev` write the configuration for the docker imag
 # More images at: https://hub.docker.com/_/node
 # Change <version> with a nodejs valid version
 # Use SemVer format: https://semver.org/
-FROM node:<version>
-
-# Create a temp folder before building
-RUN mkdir /app_temp
+FROM node:<version> AS build
 
 # Set as main working directory
-WORKDIR /app_temp
+WORKDIR /app
 
-# Install pm2 and copyfiles globally
-RUN npm install -g pm2 copyfiles
+# Install copyfiles globally
+RUN npm install -g copyfiles
 
 # Copy the package.json file to the container and
-# install the dependencies
-COPY package.json .
+# Install the dependencies
+COPY package.json ./
 RUN npm install
 
 # Copy the source code to the container
@@ -102,24 +99,21 @@ COPY . .
 # Build the app
 RUN npm run build
 
-# Create the app folder
-RUN mkdir /app
+# Specify the image to build the second stage.
+FROM node:<version>-alpine AS production
 
-# Move the build to the app folder
-RUN mv /app_temp/dist/ /app
-
-# Set the app folder as the working directory
+# Set as main working directory
 WORKDIR /app
 
-# Install the dependencies
-RUN npm install
+# Copi the built app from the previous stage
+COPY --from=build /app/dist/* .
 
-# Remove the temp folder
-RUN rm -rf /app_temp
+# Install the dependencies (Just production)
+RUN npm install --omit=dev
+RUN npm install -g pm2
 
 # Expose the port that the app will use
 # Change <port> with the port that the app will use
-# Just documentation
 EXPOSE <port>
 
 # Run the app
@@ -152,11 +146,10 @@ COPY . .
 
 # Expose the port that the app will use
 # Change <port> with the port that the app will use
-# Just documentation
 EXPOSE <port>
 
 # Run the app
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:dev"]
 ```
 
 #### 3.5
@@ -269,3 +262,5 @@ PORT=
 prod.env
 dev.env
 ```
+
+[Back](../NestJS.md)
