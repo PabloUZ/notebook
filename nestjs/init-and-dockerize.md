@@ -105,7 +105,7 @@ FROM node:<version>-alpine AS production
 # Set as main working directory
 WORKDIR /app
 
-# Copi the built app from the previous stage
+# Copy the built app from the previous stage
 COPY --from=build /app/dist/* .
 
 # Install the dependencies (Just production)
