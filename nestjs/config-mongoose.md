@@ -5,109 +5,17 @@
 Mongoose allows you to abstract the connection to MongoDB through the use of objects and methods
 
 ### 1. Add DB to Docker
+
 We have to add a new service to the `docker-compose` files:
 
-> docker-compose.yml
-> Production
-```yaml
-services:
-  app:
-    ...
+| Docker compose                                  |
+| ----------------------------------------------- |
+| [MongoDB](../database/dockerization.md#mongodb) |
 
-  # Database service
-  # Add this service to create a new container with
-  # MongoDB image
-  db:
-    # Image to use (MongoDB)
-    # You can use another image, Search them in:
-    # https://hub.docker.com/
-    image: mongo:latest
-
-    # File with the environment variables
-    env_file:
-      - ./prod.env
-
-    # Container name
-    # Used to identify the container
-    # Also to communicate with other containers
-    container_name: ${DB_HOST_NAME}
-
-    # Restart policy
-    # This will restart the container if it stops
-    # unexpectedly
-    restart: always
-
-    # Environment variables
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_ROOT_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-
-    # Volumes
-    # This will create a volume to store the data
-    volumes:
-      # Replace <app name> with the name of the app
-      - <app name>_data:/data/db
-
-# Volumes
-# Register the volume to store the data
-volumes:
-  # Replace <app name> with the name of the app
-  <app name>_data:
-    driver: local
-```
-
-> docker-compose-dev.yml
-> Development
-```yaml
-services:
-  app:
-    ...
-
-  # Database service
-  # Add this service to create a new container with
-  # MongoDB image
-  db:
-    # Image to use (MongoDB)
-    # You can use another image, Search them in:
-    # https://hub.docker.com/
-    image: mongo:latest
-
-    # File with the environment variables
-    env_file:
-      - ./dev.env
-
-    # Container name
-    # Used to identify the container
-    # Also to communicate with other containers
-    container_name: ${DB_HOST_NAME}
-
-    # Restart policy
-    # This will restart the container if it stops
-    # unexpectedly
-    restart: always
-
-    # Environment variables
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_ROOT_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-
-    # Volumes
-    # This will create a volume to store the data
-    volumes:
-      # Replace <app name> with the name of the app
-      - <app name>_data:/data/db
-
-# Volumes
-# Register the volume to store the data
-volumes:
-  # Replace <app name> with the name of the app
-  <app name>_data:
-    driver: local
-```
-
-The service `db` is mandatory for the `app` service to work, so we must specify this in `app`
+The database service is mandatory for the main service to work, so we must specify this in the `docker-compose` files.
 
 > docker-compose.yml and docker-compose-dev.yml
+
 ```yaml
 services:
   app:
@@ -121,6 +29,7 @@ services:
 Add the following envs to the files
 
 > .env
+
 ```bash
 DB_HOST_NAME=
 DATABASE_ROOT_USER=
@@ -147,6 +56,7 @@ DB_PORT=
 ```
 
 Now, we can import `MongooseModule`
+
 > app.module.ts
 
 ```typescript
@@ -162,13 +72,15 @@ Now, we can import `MongooseModule`
       // object
       // Must be an async function
       // Inject the ConfigService to access the envs
-      useFactory: async (configService: ConfigService) => {
+      useFactory: async (
+        @Inject(envsConfig.KEY) private readonly envs: ConfigType<typeof envsConfig>
+      ) => {
         // Get the envs
-        const user = configService.get<string>('DATABASE_ROOT_USER');
-        const password = configService.get<string>('DATABASE_ROOT_PASSWORD');
-        const host = configService.get<string>('DB_HOST_NAME');
-        const dbName = configService.get<string>('DATABASE_NAME');
-        const port = configService.get<number>('DB_PORT');
+        const user = envs.database.user;
+        const password = envs.database.password;
+        const host = envs.database.host;
+        const dbName = envs.database.name;
+        const port = envs.database.port;
         // The return must be an object
         // containing the uri
         return {
