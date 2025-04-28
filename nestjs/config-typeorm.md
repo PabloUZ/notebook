@@ -57,17 +57,14 @@ services:
 
 ### 2. Update env files
 
-Add the following envs to the files
+Add the envs depending on the choosen database.
 
-> .env
+| Envs                                        |
+| ----------------------------------------------------- |
+| [MySQL](../database/dockerization.md#mysql)           |
+| [PostgreSQL](../database/dockerization.md#postgresql) |
 
-```bash
-DB_HOST_NAME=
-DATABASE_ROOT_PASSWORD=
-DATABASE_NAME=
-DATABASE_USER=
-DATABASE_PASSWORD=
-```
+
 
 ### 3. Install the packages
 
@@ -102,6 +99,7 @@ Before we import the TypeOrmModule, we have to add a few variables to the `.env`
 ```bash
 DB_TYPE= # mysql | postgres | sqlite | mssql | oracle
 DB_PORT=
+DB_SYNCHRONIZE= # true | false
 ```
 
 Now, we can import `TypeOrmModule`
@@ -115,19 +113,12 @@ Now, we can import `TypeOrmModule`
     // It must be async, so we can inject the
     // ConfigService to access the envs
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      // UseFactory is a function that returns an
-      // object
-      // Inject the envConfig to access the envs
-      useFactory: (
-        @Inject(envsConfig.KEY) private readonly envs: ConfigType<typeof envsConfig>
-      ) => ({
+      inject: [envConfig.KEY],
+      useFactory: (envs: ConfigType<typeof envConfig>) => ({
         // Type of the database
         // Access through the ConfigService
         // Default is sqlite (if no env found)
-        type:
-          envs.database.type ?? "sqlite",
+        type: envs.database.type ?? 'sqlite',
 
         // Host of the database
         // Access through the ConfigService
@@ -154,7 +145,7 @@ Now, we can import `TypeOrmModule`
         // .entity.ts or .entity.js
         // In this way, the entities are automatically
         // turned into tables in the database
-        entities: [__dirname + "/../**/*.entity{.ts,.js}"],
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
 
         // Synchronize the database
         // This will create the tables if they don't

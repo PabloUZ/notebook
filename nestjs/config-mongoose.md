@@ -26,16 +26,11 @@ services:
 
 ### 2. Update env files
 
-Add the following envs to the files
+Add the envs to the files.
 
-> .env
-
-```bash
-DB_HOST_NAME=
-DATABASE_ROOT_USER=
-DATABASE_ROOT_PASSWORD=
-DATABASE_NAME=
-```
+| Envs                                          |
+| --------------------------------------------- |
+| [MySQL](../database/dockerization.md#mongodb) |
 
 ### 3. Install the packages
 
@@ -43,6 +38,7 @@ NestJS has it's own package for Mongoose (`@nestjs/mongoose`), but `mongoose` pa
 
 ```bash
 npm install @nestjs/mongoose mongoose
+npm install -D @types/mongoose
 ```
 
 ### 4. Configure Mongoose module in app
@@ -66,15 +62,12 @@ Now, we can import `MongooseModule`
     // It must be async, so we can inject the
     // ConfigService to access the envs
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
+      inject: [envConfig.KEY],
       // UseFactory is a function that returns an
       // object
       // Must be an async function
       // Inject the ConfigService to access the envs
-      useFactory: async (
-        @Inject(envsConfig.KEY) private readonly envs: ConfigType<typeof envsConfig>
-      ) => {
+      useFactory: (envs: ConfigType<typeof envsConfig>) => {
         // Get the envs
         const user = envs.database.user;
         const password = envs.database.password;

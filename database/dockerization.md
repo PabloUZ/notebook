@@ -145,7 +145,7 @@ services:
     healthcheck:
       test: [
           "CMD-SHELL",
-          "mongosh --quiet -u ${DATABASE_USER} -p ${DATABASE_PASSWORD} --authenticationDatabase ${DATABASE_NAME} --eval 'db.runCommand({ ping: 1 }).ok' || exit 1",
+          "mongosh --quiet -u ${DATABASE_USER} -p ${DATABASE_PASSWORD} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' || exit 1",
         ]
       interval: 5s
       timeout: 5s
