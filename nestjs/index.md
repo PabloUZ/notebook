@@ -15,15 +15,16 @@ These are the essential steps to set up your NestJS project:
 Initial project configuration and environment setup.
 
 - **[Create Project](./setup/create-project.md)**
-  Create a new NestJS project and configure package.json scripts
+  Create a new NestJS project
+
+- **[Configure Scripts](./setup/configure-scripts.md)**
+  Configure package.json scripts for development and production
 
 - **[Dockerization](./setup/dockerization.md)**
   Set up Docker for development and production environments
 
 - **[Environment Variables](./setup/environment-variables.md)**
-  Configure and validate environment variables with ConfigModule
-
----
+  Configure and validate environment variables with ConfigModule---
 
 ## Database
 

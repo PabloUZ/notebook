@@ -21,15 +21,17 @@ Where `<base_url>` is the static URL prefix and `<path_to_file>` is the relative
 **Use file:** `setup/create-project.md`
 **Full path:** `<base_url>/nestjs/setup/create-project.md`
 
+**When user wants to:** Configure package.json scripts
+**Use file:** `setup/configure-scripts.md`
+**Full path:** `<base_url>/nestjs/setup/configure-scripts.md`
+
 **When user wants to:** Dockerize their application
 **Use file:** `setup/dockerization.md`
 **Full path:** `<base_url>/nestjs/setup/dockerization.md`
 
 **When user wants to:** Configure environment variables
 **Use file:** `setup/environment-variables.md`
-**Full path:** `<base_url>/nestjs/setup/environment-variables.md`
-
----
+**Full path:** `<base_url>/nestjs/setup/environment-variables.md`---
 
 ### Database (Data Persistence)
 
@@ -110,6 +112,7 @@ nestjs/
 ├── index.md                              # Main documentation index
 ├── setup/
 │   ├── create-project.md                 # Create new project
+│   ├── configure-scripts.md              # Configure scripts
 │   ├── dockerization.md                  # Docker setup
 │   └── environment-variables.md          # Environment configuration
 ├── database/
@@ -132,7 +135,8 @@ nestjs/
 
 ## Keywords for Quick Reference
 
-- **Create project** → `setup/create-project.md`
+- **Create project**, **nest new** → `setup/create-project.md`
+- **Scripts**, **package.json**, **npm scripts** → `setup/configure-scripts.md`
 - **Docker** → `setup/dockerization.md`
 - **Environment variables**, **env**, **.env** → `setup/environment-variables.md`
 - **Database docker** → `database/docker-setup.md`
