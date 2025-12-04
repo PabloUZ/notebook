@@ -1,49 +1,18 @@
-[Back](../NestJS.md)
+[← Back to index](../index.md)
 
-# NestJS environment settings
+---
 
-Instructions to set up the NestJS environment using Docker for development and production.
+# Dockerize NestJS Application
 
+In this step, you will learn how to dockerize your NestJS application for both development and production environments.
 
-### 1. Create a new project
-To create a new project with NestJS just run the following command:
+---
 
-```bash
-nest new <project name>
-```
+## 1. Create Required Files
 
-### 2. Configure `package.json` scripts
-Create 3 scripts in `package.json`:
+### 1.1. Create the File Structure
 
-- `start:dev`
-- `start:prod`
-- `build`
-
-Then add the following commands:
-
-```json
-/*
-Uses nodemon to run and watch changes in the `src` directory
-to auto reload the app
-*/
-"start:dev": "nodemon src/main.ts -t ts --watch src",
-
-/*
-Uses pm2 to run production app when compiled.
-It reload app when it fail.
-*/
-"start:prod": "pm2-runtime main.js",
-
-/*
-When the app is ready to production, it builld the app
-and then copy the package.json to the build directory.
-*/
-"build": "nest build && copyfiles package.json prod.env dist/",
-```
-
-### 3. Create the new files
-#### 3.1
-Create the following structure:
+Create the following structure in your project root:
 
 ```bash
 📂my-project
@@ -55,8 +24,10 @@ Create the following structure:
 ├─ 📄 dev.env
 └─ 📄 prod.env
 ```
-#### 3.2
-In `.dockerignore` write the files that are not required for the app to work.
+
+### 1.2. Configure `.dockerignore`
+
+In `.dockerignore`, specify files that are not required for the app to work:
 
 > .dockerignore
 ```
@@ -69,11 +40,15 @@ test/
 README.md
 ```
 
-#### 3.3
-In `Dockerfile` and `Dockerfile.dev` write the configuration for the docker images
+---
 
-> Dockerfile <br>
-> Production
+## 2. Configure Dockerfiles
+
+### 2.1. Production Dockerfile
+
+Create `Dockerfile` for production environment:
+
+> Dockerfile
 ```docker
 # Specify the image to build the container.
 # This image is NodeJS based.
@@ -120,8 +95,16 @@ EXPOSE <port>
 CMD ["npm", "run", "start:prod"]
 ```
 
-> Dockerfile.dev <br>
-> Development
+**Explanation:**
+- **Multi-stage build:** First stage builds the app, second stage runs it
+- **Alpine image:** Smaller and more secure for production
+- **PM2:** Process manager for production
+
+### 2.2. Development Dockerfile
+
+Create `Dockerfile.dev` for development environment:
+
+> Dockerfile.dev
 ```docker
 # Specify the image to build the container.
 # This image is NodeJS based.
@@ -152,11 +135,19 @@ EXPOSE <port>
 CMD ["npm", "run", "start:dev"]
 ```
 
-#### 3.5
-In `docker-compose.yml` and `docker-compose-dev.yml` write the configuration for the docker containers
+**Explanation:**
+- **Nodemon:** Automatically restarts the app on code changes
+- **Full Node image:** Includes development tools
 
-> docker-compose.yml <br>
-> Production
+---
+
+## 3. Configure Docker Compose Files
+
+### 3.1. Production Docker Compose
+
+Create `docker-compose.yml` for production:
+
+> docker-compose.yml
 ```yaml
 # Production docker-compose file
 # This file will run the app in production mode
@@ -198,8 +189,11 @@ services:
       - "<host port>:${PORT}"
 ```
 
-> docker-compose-dev.yml <br>
-> Development
+### 3.2. Development Docker Compose
+
+Create `docker-compose-dev.yml` for development:
+
+> docker-compose-dev.yml
 ```yaml
 # Development docker-compose file
 # This file will run the app in development mode
@@ -247,8 +241,15 @@ services:
       - "<host port>:${PORT}"
 ```
 
-#### 3.6
-In the `.env` files write the following variables at least
+**Key difference:** Development uses volumes to mount source code for hot-reloading
+
+---
+
+## 4. Configure Environment Files
+
+### 4.1. Create Environment Variables
+
+In both `dev.env` and `prod.env` files, add at least:
 
 ```bash
 NODE_ENV=
@@ -256,11 +257,38 @@ HOST_NAME=
 PORT=
 ```
 
-### 4. Add the .env files to .gitignore
+### 4.2. Add to `.gitignore`
+
+Add the environment files to `.gitignore`:
+
 ```
 ...
 prod.env
 dev.env
 ```
 
-[Back](../NestJS.md)
+---
+
+## 5. Run the Application
+
+### Development Mode
+```bash
+docker-compose -f docker-compose-dev.yml up
+```
+
+### Production Mode
+```bash
+docker-compose up
+```
+
+---
+
+## Next Steps
+
+Now that your application is dockerized, you need to configure environment variables properly using NestJS ConfigModule.
+
+**Continue with:** [Environment Variables](./environment-variables.md)
+
+---
+
+[← Back to index](../index.md)
