@@ -26,8 +26,8 @@ Add the following commands to the `scripts` section of your `package.json`:
 {
   "scripts": {
     "start:dev": "nodemon src/main.ts -t ts --watch src",
-    "start:prod": "pm2-runtime main.js",
-    "build": "nest build && copyfiles package.json prod.env dist/"
+    "start:prod": "pm2-runtime dist/main.js",
+    "build": "nest build && copyfiles scripts/ dist/",
   }
 }
 ```
@@ -49,7 +49,7 @@ Add the following commands to the `scripts` section of your `package.json`:
 
 ### `start:prod`
 ```json
-"start:prod": "pm2-runtime main.js"
+"start:prod": "pm2-runtime dist/main.js"
 ```
 - **Purpose:** Run the application in production mode
 - **What does it do?**
@@ -60,12 +60,12 @@ Add the following commands to the `scripts` section of your `package.json`:
 
 ### `build`
 ```json
-"build": "nest build && copyfiles package.json prod.env dist/"
+"build": "nest build && copyfiles scripts/ dist/"
 ```
 - **Purpose:** Compile the project for production
 - **What does it do?**
   - Compiles TypeScript code to JavaScript
-  - Copies `package.json` and `prod.env` to the `dist/` folder
+  - Copies `scripts/` folder to the `dist/` folder
 - **When to use it:** Before deploying to production
 
 ---

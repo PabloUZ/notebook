@@ -314,11 +314,8 @@ You've learned:
 
 ## Next Steps
 
-Now you can continue with other features:
-
-- **Validation:** [Configure DTOs](../../validation/dto.md)
-- **Security:** [Password Hashing](../../security/password-hashing.md)
-- **Documentation:** [Setup Swagger](../../documentation/swagger.md)
+Now you can continue with creating and running migrations to manage database schema changes:
+**Continue with:** [TypeORM Migrations](./migrations.md)
 
 ---
 

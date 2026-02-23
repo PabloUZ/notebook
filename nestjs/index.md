@@ -43,6 +43,9 @@ Use TypeORM for MySQL, PostgreSQL, SQLite, and other SQL databases.
 - **[Using TypeORM](./database/typeorm/usage.md)**
   Create entities, use decorators, and interact with your database
 
+- **[Migrations](./database/typeorm/migrations.md)**
+  Manage database schema changes with TypeORM migrations
+
 ### Mongoose (For MongoDB)
 Use Mongoose for MongoDB document databases.
 

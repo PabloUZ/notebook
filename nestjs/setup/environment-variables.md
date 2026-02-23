@@ -238,6 +238,56 @@ anyMethod() {
 
 ---
 
+## 7. Auto restore .env variables
+If you want to automatically restore the .env variables files (from a previous `.env.example`), you can create the following script:
+
+```bash
+📂my-project
+└─ 📂 scripts
+   └─ 📄 generate-envs.js
+```
+
+> generate-envs.js
+```javascript
+import path from 'path';
+import fs from 'fs';
+
+const rootDir = path.resolve(process.cwd());
+
+const exampleEnvPath = path.join(rootDir, '.env.example');
+
+if (!fs.existsSync(exampleEnvPath)) {
+    console.error('.env.example file not found.');
+    process.exit(1);
+}
+
+const devEnvPath = path.join(rootDir, 'dev.env');
+const prodEnvPath = path.join(rootDir, 'prod.env');
+
+if (!fs.existsSync(devEnvPath)) {
+    fs.copyFileSync(exampleEnvPath, devEnvPath);
+    console.log('dev.env file created from .env.example');
+}
+
+if (!fs.existsSync(prodEnvPath)) {
+    fs.copyFileSync(exampleEnvPath, prodEnvPath);
+    console.log('prod.env file created from .env.example');
+}
+```
+
+After creating the file, we should creatte a script in the `package.json` to run it:
+
+> package.json
+```json
+{
+  "scripts": {
+    "generate-envs": "node ./scripts/generate-envs.js",
+  }
+}
+```
+
+---
+
 ## Summary
 
 You've learned:
@@ -246,6 +296,7 @@ You've learned:
 - How to use ConfigService to access environment variables
 - How to validate environment variables with class-validator
 - How to create type-safe environment configurations
+- How to automatically restore .env files with a custom script
 
 ---
 

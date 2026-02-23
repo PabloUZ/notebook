@@ -49,7 +49,7 @@ README.md
 Create `Dockerfile` for production environment:
 
 > Dockerfile
-```docker
+```Dockerfile
 # Specify the image to build the container.
 # This image is NodeJS based.
 # More images at: https://hub.docker.com/_/node
@@ -80,12 +80,17 @@ FROM node:<version>-alpine AS production
 # Set as main working directory
 WORKDIR /app
 
-# Copy the built app from the previous stage
-COPY --from=build /app/dist/* .
+# Copy the package.json and the environment file from the previous stage
+COPY --from=build /app/prod.env .
+COPY --from=build /app/package.json .
 
 # Install the dependencies (Just production)
-RUN npm install --omit=dev
 RUN npm install -g pm2
+RUN npm install --omit=dev
+RUN npm install dotenv-cli
+
+# Copy the built app from the previous stage
+COPY --from=build /app/dist ./dist
 
 # Expose the port that the app will use
 # Change <port> with the port that the app will use
@@ -105,7 +110,7 @@ CMD ["npm", "run", "start:prod"]
 Create `Dockerfile.dev` for development environment:
 
 > Dockerfile.dev
-```docker
+```Dockerfile
 # Specify the image to build the container.
 # This image is NodeJS based.
 # More images at: https://hub.docker.com/_/node
