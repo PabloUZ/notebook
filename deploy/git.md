@@ -1,5 +1,3 @@
-[Back](../Deploy.md)
-
 # Deploying with Git
 
 This deploy allows you to push the code changes into the serve instead a cloud repository as github. In this way, you can finish a feature and upload your changes into your server.
