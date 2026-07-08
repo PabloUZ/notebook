@@ -20,6 +20,9 @@ Initial project configuration and environment setup.
 - **[Configure Scripts](./setup/configure-scripts.md)**
   Configure package.json scripts for development and production
 
+- **[Configure EditorConfig, Prettier and ESLint](./setup/configure-rules-editor.md)**
+  Set up editor rules, code formatting and linting for code consistency
+
 - **[Dockerization](./setup/dockerization.md)**
   Set up Docker for development and production environments
 

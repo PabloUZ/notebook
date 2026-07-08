@@ -17,7 +17,7 @@ Create the following structure in your project root:
 ```bash
 📂my-project
 ├─ 📄 .dockerignore
-├─ 📄 docker-compose-dev.yml
+├─ 📄 docker-compose.dev.yml
 ├─ 📄 docker-compose.yml
 ├─ 📄 Dockerfile
 ├─ 📄 Dockerfile.dev
@@ -172,7 +172,7 @@ services:
 
     # Environment variables
     environment:
-      NODE_ENV: ${NODE_ENV}
+      NODE_ENV: prod
 
     # Container name
     # Used to identify the container
@@ -196,9 +196,9 @@ services:
 
 ### 3.2. Development Docker Compose
 
-Create `docker-compose-dev.yml` for development:
+Create `docker-compose.dev.yml` for development:
 
-> docker-compose-dev.yml
+> docker-compose.dev.yml
 ```yaml
 # Development docker-compose file
 # This file will run the app in development mode
@@ -218,7 +218,7 @@ services:
 
     # Environment variables
     environment:
-      NODE_ENV: ${NODE_ENV}
+      NODE_ENV: dev
 
     # Container name
     # Used to identify the container
@@ -257,7 +257,6 @@ services:
 In both `dev.env` and `prod.env` files, add at least:
 
 ```bash
-NODE_ENV=
 HOST_NAME=
 PORT=
 ```
@@ -278,12 +277,12 @@ dev.env
 
 ### Development Mode
 ```bash
-docker-compose -f docker-compose-dev.yml up
+docker compose -f docker-compose.dev.yml up
 ```
 
 ### Production Mode
 ```bash
-docker-compose up
+docker compose up
 ```
 
 ---
