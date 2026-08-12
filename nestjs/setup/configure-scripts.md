@@ -2,11 +2,45 @@
 
 ---
 
-# Configure Package.json Scripts
+# Configure Package.json Scripts and path alias
 
-Once the project is created, you need to configure scripts to facilitate development and production.
+Once the project is created, you need to configure scripts and path aliases to facilitate development and production.
 
 ---
+
+## Install and setup nodemon
+
+Run the following command to install `nodemon` as a development dependency:
+
+```bash
+npm install -D nodemon
+```
+
+Now, create a `nodemon.json` file in the root of your project with the following content:
+
+```json
+{
+  "watch": ["src"],
+  "ext": "ts",
+  "exec": "ts-node -r tsconfig-paths/register src/main.ts"
+}
+```
+
+---
+
+## Setup path alias
+
+In `tsconfig.json`, add the following path alias configuration:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@<module>/*": ["./src/<module>/*"]
+    }
+  }
+}
+```
 
 ## Scripts to Create
 
@@ -25,7 +59,7 @@ Add the following commands to the `scripts` section of your `package.json`:
 ```json
 {
   "scripts": {
-    "start:dev": "nodemon src/main.ts -t ts --watch src",
+    "start:dev": "nodemon",
     "start:prod": "pm2-runtime dist/main.js",
     "build": "nest build && copyfiles scripts/ dist/",
   }
@@ -38,13 +72,13 @@ Add the following commands to the `scripts` section of your `package.json`:
 
 ### `start:dev`
 ```json
-"start:dev": "nodemon src/main.ts -t ts --watch src"
+"start:dev": "nodemon"
 ```
 - **Purpose:** Run the application in development mode
 - **What does it do?**
-  - Uses `nodemon` to monitor changes
-  - Watches the `src` folder
-  - Automatically restarts the application when it detects changes
+  - Uses `nodemon` to watch for file changes in the `src/` directory
+  - Automatically restarts the application when changes are detected
+  - Uses `ts-node` to run TypeScript code directly without compiling
 - **When to use it:** During local development
 
 ### `start:prod`
@@ -72,9 +106,9 @@ Add the following commands to the `scripts` section of your `package.json`:
 
 ## Next Steps
 
-Now that you have your project created and scripts configured, the next step is to **dockerize your application** to facilitate development and deployment.
+Now that you have your project created and scripts configured, the next step is to **configure linting and editor rules** to maintain code consistency.
 
-**Continue with:** [Dockerization](./dockerization.md)
+**Continue with:** [Configure ESLint and EditorConfig](./configure-rules-editor.md)
 
 ---
 
