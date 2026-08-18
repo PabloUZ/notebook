@@ -45,7 +45,7 @@ Import and configure `MongooseModule` in your main application module:
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigType } from '@nestjs/config';
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 @Module({
   imports: [

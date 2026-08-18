@@ -376,6 +376,7 @@ You've learned:
 
 Continue with other important features:
 
+- **Output shaping:** [Data Access/Output Objects (DAOs)](./dao.md)
 - **Security:** [Password Hashing](../security/password-hashing.md)
 - **Documentation:** [Setup Swagger](../documentation/swagger.md)
 

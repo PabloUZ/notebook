@@ -129,7 +129,7 @@ import { join } from 'path';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 async function bootstrap() {
   const envs = envConfig();

@@ -93,9 +93,12 @@ Create the following structure:
 📂my-project
 └─ 📂 src
    └─ 📂 config
-      ├─ 📄 envs.dto.ts
-      └─ 📄 validate-envs.ts
+      └─ 📂 env
+         ├─ 📄 envs.dto.ts
+         └─ 📄 validate-envs.ts
 ```
+
+> **Note:** Every environment-related file lives inside `config/env/`, so `config/` stays free for other app-wide configuration (e.g. `config/database/datasource.ts`).
 
 ### 5.3. Create the DTO
 
@@ -173,7 +176,8 @@ To get type-safe access to environment variables, use the `registerAs` function.
 📂my-project
 └─ 📂 src
    └─ 📂 config
-      └─ 📄 envs.type.ts
+      └─ 📂 env
+         └─ 📄 envs.type.ts
 ```
 
 ### 6.2. Configure the File
@@ -205,7 +209,7 @@ Add it to the `ConfigModule` in the app module:
 
 > app.module.ts
 ```typescript
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 @Module({
   imports: [
@@ -224,7 +228,7 @@ Now you can inject the env variables in any class:
 > MyClass
 ```typescript
 import { ConfigType } from '@nestjs/config';
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 constructor(
   @Inject(envConfig.KEY)
@@ -302,9 +306,9 @@ You've learned:
 
 ## Next Steps
 
-With your project set up and environment variables configured, you're ready to add a database.
+With your project set up and environment variables configured, define how your modules and layers will be organized before adding features.
 
-**Continue with:** [Database Setup](../database/docker-setup.md)
+**Continue with:** [Architecture Overview](../architecture/overview.md)
 
 ---
 

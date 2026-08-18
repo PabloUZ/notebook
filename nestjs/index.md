@@ -27,7 +27,27 @@ Initial project configuration and environment setup.
   Set up Docker for development and production environments
 
 - **[Environment Variables](./setup/environment-variables.md)**
-  Configure and validate environment variables with ConfigModule---
+  Configure and validate environment variables with ConfigModule
+
+---
+
+## Architecture
+
+How modules, layers, and cross-module relations are organized in every project covered by this guide.
+
+- **[Overview](./architecture/overview.md)**
+  The controller → service → repository → entity layering and where each piece lives
+
+- **[Module Folder Structure](./architecture/module-structure.md)**
+  The `src/core/<module>` convention, file naming, and module encapsulation
+
+- **[Repository Pattern & Clean Layers](./architecture/repository-pattern.md)**
+  Interfaces, repositories, and relations between entities of different modules
+
+- **[Microservice String Constants](./architecture/microservices-constants.md)**
+  Centralize message patterns and tokens instead of repeating literal strings
+
+---
 
 ## Database
 
@@ -66,6 +86,9 @@ Ensure data integrity with DTOs and validation.
 
 - **[Data Transfer Objects (DTOs)](./validation/dto.md)**
   Validate and transform request data using class-validator
+
+- **[Data Access/Output Objects (DAOs)](./validation/dao.md)**
+  Shape and filter response data using class-transformer
 
 ---
 
@@ -134,11 +157,12 @@ Split your application into independent services that communicate with each othe
 ### For Beginners
 Follow the guide from top to bottom:
 1. **Setup** → Create and dockerize your project
-2. **Database** → Choose and configure your database
-3. **Validation** → Add data validation
-4. **Security** → Implement security features
-5. **Documentation** → Document your API
-6. **Microservices** *(optional)* → Split the app into services once you actually need to scale them independently
+2. **Architecture** → Define how your modules and layers are organized before adding features
+3. **Database** → Choose and configure your database
+4. **Validation** → Add data validation
+5. **Security** → Implement security features
+6. **Documentation** → Document your API
+7. **Microservices** *(optional)* → Split the app into services once you actually need to scale them independently
 
 ### For Experienced Developers
 Jump directly to the topics you need. Each section is self-contained with all necessary information.
@@ -150,6 +174,7 @@ Jump directly to the topics you need. Each section is self-contained with all ne
 Throughout this guide, you'll learn:
 - How to structure your NestJS projects
 - Environment configuration best practices
+- Clean architecture layering and the repository pattern
 - Database connection and ORM usage
 - Data validation techniques
 - Security implementation
