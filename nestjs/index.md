@@ -87,6 +87,48 @@ Generate interactive API documentation.
 
 ---
 
+## Microservices
+
+Split your application into independent services that communicate with each other, plus an API Gateway to expose them over HTTP.
+
+### Getting Started
+- **[Microservices Overview](./microservices/overview.md)**
+  Project structure, message patterns, and how to choose a transport
+
+### TCP
+- **[Configure TCP](./microservices/tcp/configuration.md)**
+  Create a microservice with the simplest, broker-less transport
+
+- **[Using TCP](./microservices/tcp/usage.md)**
+  Expose handlers and consume them from an API Gateway
+
+### gRPC
+- **[Configure gRPC](./microservices/grpc/configuration.md)**
+  Create a microservice with a strongly-typed `.proto` contract
+
+- **[Using gRPC](./microservices/grpc/usage.md)**
+  Expose handlers and consume them from an API Gateway
+
+### Kafka
+- **[Configure Kafka](./microservices/kafka/configuration.md)**
+  Create a microservice for high-throughput event streaming
+
+- **[Using Kafka](./microservices/kafka/usage.md)**
+  Expose handlers and consume them from an API Gateway
+
+### RabbitMQ
+- **[Configure RabbitMQ](./microservices/rabbitmq/configuration.md)**
+  Create a microservice backed by reliable message queues
+
+- **[Using RabbitMQ](./microservices/rabbitmq/usage.md)**
+  Expose handlers, manually acknowledge messages, and consume them from an API Gateway
+
+### Orchestration
+- **[Docker Setup for Microservices](./microservices/docker-setup.md)**
+  Orchestrate the API Gateway, microservices, and brokers with Docker Compose
+
+---
+
 ## How to Use This Guide
 
 ### For Beginners
@@ -96,6 +138,7 @@ Follow the guide from top to bottom:
 3. **Validation** → Add data validation
 4. **Security** → Implement security features
 5. **Documentation** → Document your API
+6. **Microservices** *(optional)* → Split the app into services once you actually need to scale them independently
 
 ### For Experienced Developers
 Jump directly to the topics you need. Each section is self-contained with all necessary information.
@@ -111,3 +154,4 @@ Throughout this guide, you'll learn:
 - Data validation techniques
 - Security implementation
 - API documentation standards
+- Splitting a monolith into microservices and orchestrating them with Docker

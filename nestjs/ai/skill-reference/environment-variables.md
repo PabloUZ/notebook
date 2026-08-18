@@ -1,20 +1,12 @@
-[← Back to index](../index.md)
-
----
-
 # Configure Environment Variables
 
-Learn how to properly configure and validate environment variables in your NestJS application using the `@nestjs/config` package.
-
----
+Learn how to properly configure and validate environment variables in a NestJS application using the `@nestjs/config` package.
 
 ## 1. Install the Config Module
 
 ```bash
 npm install @nestjs/config
 ```
-
----
 
 ## 2. Load the Module Globally
 
@@ -37,8 +29,6 @@ The `forRoot` method can receive an object with several options:
 | `ignoreEnvFile` | Disables .env file loading | `true` or `false` |
 | `isGlobal` | Allows you to load the env configuration globally, so you don't have to import it anymore in the project | `true` or `false` |
 | `load` | Allows you to load a custom configuration function. This function should return an object with the configuration | `() => {}` |
-
----
 
 ## 3. Use the ConfigService
 
@@ -63,8 +53,6 @@ Now that you have the `ConfigService` ready to use, you can call the `get` metho
 const myVariable = this.configService.get<string>('MY_DOTENV_VARIABLE_NAME');
 ```
 
----
-
 ## 4. Alternative: Use process.env
 
 To get the variables from .env, you can also use process:
@@ -72,8 +60,6 @@ To get the variables from .env, you can also use process:
 ```typescript
 process.env.MY_DOTENV_VARIABLE_NAME
 ```
-
----
 
 ## 5. Validate Environment Variables
 
@@ -161,8 +147,6 @@ imports: [
 ],
 ```
 
----
-
 ## 6. Type Environment Variables
 
 To get type-safe access to environment variables, use the `registerAs` function.
@@ -236,9 +220,8 @@ anyMethod() {
 }
 ```
 
----
+## 7. Auto Restore .env Variables
 
-## 7. Auto restore .env variables
 If you want to automatically restore the .env variables files (from a previous `.env.example`), you can create the following script:
 
 ```bash
@@ -275,7 +258,7 @@ if (!fs.existsSync(prodEnvPath)) {
 }
 ```
 
-After creating the file, we should creatte a script in the `package.json` to run it:
+After creating the file, create a script in the `package.json` to run it:
 
 > package.json
 ```json
@@ -285,27 +268,3 @@ After creating the file, we should creatte a script in the `package.json` to run
   }
 }
 ```
-
----
-
-## Summary
-
-You've learned:
-
-- How to install and configure `@nestjs/config`
-- How to use ConfigService to access environment variables
-- How to validate environment variables with class-validator
-- How to create type-safe environment configurations
-- How to automatically restore .env files with a custom script
-
----
-
-## Next Steps
-
-With your project set up and environment variables configured, you're ready to add a database.
-
-**Continue with:** [Database Setup](../database/docker-setup.md)
-
----
-
-[← Back to index](../index.md)

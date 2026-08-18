@@ -1,20 +1,14 @@
-[← Back to index](../index.md)
-
----
-
 # Dockerize NestJS Application
 
-In this step, you will learn how to dockerize your NestJS application for both development and production environments.
-
----
+Learn how to dockerize a NestJS application for both development and production environments.
 
 ## 1. Create Required Files
 
 ### 1.1. Create the File Structure
 
-The Docker Compose files must live **one level above** your NestJS project, not inside it. This keeps the same structure whether you have a single application or, later on, multiple [microservices](../microservices/overview.md) side by side.
+The Docker Compose files must live **one level above** your NestJS project, not inside it. This keeps the same structure whether you have a single application or, later on, multiple microservices side by side.
 
-Create the following structure, with your project (created with [`nest new`](./create-project.md)) nested one level below the root:
+Create the following structure, with your project (created with `nest new`) nested one level below the root:
 
 ```bash
 📂root-folder
@@ -46,8 +40,6 @@ test/
 .prettierrc
 README.md
 ```
-
----
 
 ## 2. Configure Dockerfiles
 
@@ -149,11 +141,9 @@ CMD ["npm", "run", "start:dev"]
 - **Nodemon:** Automatically restarts the app on code changes
 - **Full Node image:** Includes development tools
 
----
-
 ## 3. Configure Docker Compose Files
 
-These files go in `root-folder`, **next to** `<project name>`, not inside it — see [1.1](#11-create-the-file-structure).
+These files go in `root-folder`, **next to** `<project name>`, not inside it.
 
 ### 3.1. Production Docker Compose
 
@@ -259,8 +249,6 @@ services:
 
 **Key difference:** Development uses volumes to mount source code for hot-reloading
 
----
-
 ## 4. Configure Environment Files
 
 ### 4.1. Create Environment Variables
@@ -293,8 +281,6 @@ Inside `<project name>`, ignore every env file **except** the example one:
 !.env.example
 ```
 
----
-
 ## 5. Run the Application
 
 Run these commands from `root-folder`, where `docker-compose.yml` lives.
@@ -308,15 +294,3 @@ docker compose -f docker-compose.dev.yml up
 ```bash
 docker compose up
 ```
-
----
-
-## Next Steps
-
-Now that your application is dockerized, you need to configure environment variables properly using NestJS ConfigModule.
-
-**Continue with:** [Environment Variables](./environment-variables.md)
-
----
-
-[← Back to index](../index.md)

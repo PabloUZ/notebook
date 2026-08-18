@@ -1,12 +1,6 @@
-[← Back to index](../index.md)
-
----
-
 # Dockerize Databases
 
-Learn how to add database services to your Docker Compose configuration. This guide covers MySQL, PostgreSQL, and MongoDB.
-
----
+How to add database services to a Docker Compose configuration. Covers MySQL, PostgreSQL, and MongoDB.
 
 ## MySQL
 
@@ -69,9 +63,7 @@ volumes:
 ```
 
 > [!IMPORTANT]
-> Use the **same** values you just typed in `<db host name>`, `<database user>`, `<database password>` and `<database name>` when configuring the app's own connection (e.g. `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` in the app's `.env` — see [Configure TypeORM](./typeorm/configuration.md)).
-
----
+> Use the **same** values you just typed in `<db host name>`, `<database user>`, `<database password>` and `<database name>` when configuring the app's own connection (e.g. `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` in the app's `.env` — see the TypeORM configuration reference).
 
 ## PostgreSQL
 
@@ -130,9 +122,7 @@ volumes:
 ```
 
 > [!IMPORTANT]
-> Use the **same** values you just typed in `<db host name>`, `<database user>`, `<database password>` and `<database name>` when configuring the app's own connection (e.g. `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` in the app's `.env` — see [Configure TypeORM](./typeorm/configuration.md)).
-
----
+> Use the **same** values you just typed in `<db host name>`, `<database user>`, `<database password>` and `<database name>` when configuring the app's own connection (e.g. `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` in the app's `.env` — see the TypeORM configuration reference).
 
 ## MongoDB
 
@@ -189,9 +179,7 @@ volumes:
 ```
 
 > [!IMPORTANT]
-> Use the **same** values you just typed in `<db host name>`, `<database user>`, `<database password>` and `<database name>` when configuring the app's own connection (see [Configure Mongoose](./mongoose/configuration.md)).
-
----
+> Use the **same** values you just typed in `<db host name>`, `<database user>`, `<database password>` and `<database name>` when configuring the app's own connection (see the Mongoose configuration reference).
 
 ## Configure App Dependency on Database
 
@@ -208,31 +196,3 @@ services:
 ```
 
 > **Note:** Replace `db` with the actual name of your database service (`mysql`, `postgres`, or `mongo`)
-
----
-
-## Summary
-
-You've learned:
-
-- How to dockerize MySQL with health checks
-- How to dockerize PostgreSQL with health checks
-- How to dockerize MongoDB with health checks
-- How to persist database data with volumes
-- How to configure service dependencies
-
----
-
-## Next Steps
-
-Now that you have a database running, you need to connect it to your NestJS application:
-
-**For SQL databases (MySQL, PostgreSQL):**
-[Configure TypeORM](./typeorm/configuration.md)
-
-**For MongoDB:**
-[Configure Mongoose](./mongoose/configuration.md)
-
----
-
-[← Back to index](../index.md)

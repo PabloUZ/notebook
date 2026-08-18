@@ -1,16 +1,10 @@
-[← Back to usage](./usage.md) | [← Back to index](../../index.md)
-
----
-
 # TypeORM Migrations
 
-Learn how to create and run migrations with TypeORM in NestJS.
-
----
+How to create and run migrations with TypeORM in NestJS.
 
 ## 1. Setup
 
-### 1.1 Setup scripts in `package.json`
+### 1.1 Setup Scripts in `package.json`
 Add the following scripts to your `package.json`:
 
 ```json
@@ -21,7 +15,7 @@ Add the following scripts to your `package.json`:
 }
 ```
 
-### 1.2 Create DataSource configuration
+### 1.2 Create DataSource Configuration
 Create a `datasource.ts` file in your `src/config/database` folder with the following content:
 ```typescript
 import path from 'path';
@@ -47,7 +41,7 @@ export const AppDataSource = new DataSource({
 });
 ```
 
-### 1.3 Create migration scripts and folder
+### 1.3 Create Migration Scripts and Folder
 Create a `scripts` folder in the root of your project and add the following files:
 ```bash
 📂scripts
@@ -153,7 +147,7 @@ try {
 
 ## 2. Create and Run Migrations
 
-### 2.1 Create a migration
+### 2.1 Create a Migration
 
 **NOTE:** If you are using docker, make sure to run the migration generation command inside the container where your code is located, not on your host machine.
 
@@ -165,7 +159,7 @@ npm run migration:generate <migration-name>
 ```
 Replace `<migration-name>` with a descriptive name for your migration, such as `create-users-table`.
 
-### 2.2 Run migrations
+### 2.2 Run Migrations
 To run the migrations, use the following command:
 ```bash
 npm run migration:run:dev
@@ -175,7 +169,4 @@ This will run the migrations in your development environment. For production, us
 npm run migration:run:prod
 ```
 
-**Note:* Make sure to set the appropriate environment variables for your database connection in your `.env.dev` and `.env.prod` files.
-
----
-[← Back to usage](./usage.md) | [← Back to index](../../index.md)
+**Note:** Make sure to set the appropriate environment variables for your database connection in your `.env.dev` and `.env.prod` files.
