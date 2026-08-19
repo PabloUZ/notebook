@@ -10,6 +10,13 @@ Manifest of every file in this skill reference, with a one-line description. Use
 - [dockerization.md](./dockerization.md) — Dockerize a single NestJS app (Dockerfile, Dockerfile.dev, docker-compose files, env files).
 - [environment-variables.md](./environment-variables.md) — Configure, validate, and type environment variables with `@nestjs/config`.
 
+## Architecture
+
+- [architecture-overview.md](./architecture-overview.md) — The controller → service → repository → entity → db layering and where each piece lives.
+- [architecture-module-structure.md](./architecture-module-structure.md) — The `src/core/<module>` convention, file naming, and module encapsulation.
+- [architecture-repository-pattern.md](./architecture-repository-pattern.md) — Interfaces, repositories, and relations between entities of different modules.
+- [architecture-microservices-constants.md](./architecture-microservices-constants.md) — Centralize microservice message patterns and tokens as constants.
+
 ## Database
 
 - [database-docker-setup.md](./database-docker-setup.md) — Dockerize MySQL, PostgreSQL, and MongoDB services.
@@ -22,6 +29,7 @@ Manifest of every file in this skill reference, with a one-line description. Use
 ## Validation
 
 - [dto-validation.md](./dto-validation.md) — Validate and transform request data with DTOs and class-validator.
+- [dao-validation.md](./dao-validation.md) — Shape and filter response data with DAOs and class-transformer.
 
 ## Security
 

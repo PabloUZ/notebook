@@ -84,7 +84,7 @@ Replace the HTTP bootstrap in `main.ts` with `createMicroservice`. Since this ru
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 async function bootstrap() {
   const envs = envConfig();

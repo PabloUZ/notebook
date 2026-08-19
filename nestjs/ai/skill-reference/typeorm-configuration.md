@@ -66,7 +66,7 @@ Import and configure `TypeOrmModule` in your main application module:
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigType } from '@nestjs/config';
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 @Module({
   imports: [

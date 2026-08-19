@@ -79,8 +79,9 @@ Create the following structure:
 📂my-project
 └─ 📂 src
    └─ 📂 config
-      ├─ 📄 envs.dto.ts
-      └─ 📄 validate-envs.ts
+      └─ 📂 env
+         ├─ 📄 envs.dto.ts
+         └─ 📄 validate-envs.ts
 ```
 
 ### 5.3. Create the DTO
@@ -157,7 +158,8 @@ To get type-safe access to environment variables, use the `registerAs` function.
 📂my-project
 └─ 📂 src
    └─ 📂 config
-      └─ 📄 envs.type.ts
+      └─ 📂 env
+         └─ 📄 envs.type.ts
 ```
 
 ### 6.2. Configure the File
@@ -189,7 +191,7 @@ Add it to the `ConfigModule` in the app module:
 
 > app.module.ts
 ```typescript
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 @Module({
   imports: [
@@ -208,7 +210,7 @@ Now you can inject the env variables in any class:
 > MyClass
 ```typescript
 import { ConfigType } from '@nestjs/config';
-import { envConfig } from './config/envs.type';
+import { envConfig } from './config/env/envs.type';
 
 constructor(
   @Inject(envConfig.KEY)

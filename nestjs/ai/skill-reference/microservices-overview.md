@@ -48,6 +48,8 @@ handleUserCreated(data: { id: number }) {
 }
 ```
 
+> **Tip:** Define pattern strings like `'sum'` or `'user_created'` as constants instead of repeating the literal across every microservice and the gateway — see the microservice constants reference.
+
 ## 3. Choosing a Transport
 
 | Transport | Broker required | Best for |
