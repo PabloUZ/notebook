@@ -2,6 +2,13 @@
 
 This notebook contains a lot of information after hours and hours of testing different things about different frameworks and libraries. It is a collection of notes, code snippets, and references that I found useful during my development journey.
 
+## Create or update an artifact
+Artifacts are the knowledge bases to work with any tool, framework, or library. Each artifact is a separate folder in this repository.
+
+To create or update an artifact you must follow the structure of existing artifacts.
+
+Each artifact contains the ways to use a specific tool, framework, or library. It contains a lot of information about how to do things, code snippets, and references that you found useful during your development journey.
+
 ## Create or update a skill reference
 Claude is a large language model that can load references with its skills feature.
 
